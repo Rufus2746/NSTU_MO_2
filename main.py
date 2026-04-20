@@ -4,10 +4,7 @@ import one_dim_methods as odm
 from math import acos
 from math import exp
 
-
-
 func_counter = 0
-
 
 def reset_counter():
     global func_counter
@@ -47,7 +44,7 @@ def find_lamda(x, y, function, one_dim_method):
     return lamda
 
 
-def gradient_decent(function, one_dim_method=odm.golden_section_method, eps=1e-4):
+def gradient_decent(function, one_dim_method=odm.golden_section_method, eps=1e-7):
     coords_prev = np.zeros(2)
     coords_next = np.zeros(2)
     delta_func = 1.0
@@ -55,8 +52,8 @@ def gradient_decent(function, one_dim_method=odm.golden_section_method, eps=1e-4
     #coords_prev[0] = input("Enter x0 ")
     #coords_prev[1] = input("Enter y0 ")
 
-    coords_prev[0] = 6.
-    coords_prev[1] = 6.
+    coords_prev[0] = -4.
+    coords_prev[1] = 2.
 
     x_values = np.array(coords_prev[0])
     y_values = np.array(coords_prev[1])
@@ -118,14 +115,17 @@ def gradient_decent(function, one_dim_method=odm.golden_section_method, eps=1e-4
 
 def find_Hesse(delta_coords, delta_grad, Hesse):
     I = np.eye(2)
-    coeff = 1.0 / (np.dot(delta_grad, delta_coords))
+    denom  = np.dot(delta_grad, delta_coords)
+    if(denom <= 1e-10):
+        return I
+    coeff = 1.0 / denom
     A1 = I - coeff * np.outer(delta_coords, delta_grad)
     A2 = I - coeff * np.outer(delta_grad, delta_coords)
     Hesse = np.dot(A1, np.dot(Hesse, A2)) + coeff * np.outer(delta_coords,delta_coords)
     return Hesse
 
 
-def broyden_method(function, one_dim_method=odm.golden_section_method, eps=1e-4):
+def broyden_method(function, one_dim_method=odm.golden_section_method, eps=1e-7):
     coords_prev = np.zeros(2)
     coords_next = np.zeros(2)
     delta_func = 1.0
@@ -136,8 +136,8 @@ def broyden_method(function, one_dim_method=odm.golden_section_method, eps=1e-4)
     #coords_prev[0] = input("Enter x0 ")
     #coords_prev[1] = input("Enter y0 ")
 
-    coords_prev[0] = 6.
-    coords_prev[1] = 6.
+    coords_prev[0] = -4.
+    coords_prev[1] = 2.
 
     x_values = np.array(coords_prev[0])
     y_values = np.array(coords_prev[1])
@@ -211,8 +211,8 @@ def plot(function):
     zgrid = function(xgrid, ygrid)
     
     plt.figure(figsize=(5, 5))
-    plt.contourf(xgrid, ygrid, zgrid, np.linspace(0, 2000, 2000))
-    #plt.contourf(xgrid, ygrid, zgrid, np.linspace(-3, 2, 50))
+    #plt.contourf(xgrid, ygrid, zgrid, np.linspace(0, 2000, 2000))
+    plt.contourf(xgrid, ygrid, zgrid, np.linspace(-3, 2, 50))
     plt.colorbar()
 
     x_values_broyden, y_values_broyden = broyden_method(function)
@@ -225,8 +225,8 @@ def plot(function):
     plt.show()
 
 if __name__ == "__main__":
-    plot(quadratic_function)
+    #plot(quadratic_function)
     #plot(rosenbrock_function)
     # 0 2000 2000
-    #plot(personal_function)
+    plot(personal_function)
     # -3 2 50
