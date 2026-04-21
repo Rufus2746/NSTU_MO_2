@@ -52,13 +52,14 @@ def gradient_decent(function, one_dim_method=odm.golden_section_method, eps=1e-5
     #coords_prev[0] = input("Enter x0 ")
     #coords_prev[1] = input("Enter y0 ")
 
-    coords_prev[0] = 6.
-    coords_prev[1] = 6.
+    coords_prev[0] = -4.
+    coords_prev[1] = 2.
 
     x_values = np.array(coords_prev[0])
     y_values = np.array(coords_prev[1])
     
     i = 0
+    print("Gradient:")
     print("TABLE 2 FOR GRADIENT DECENT")
     print(f'iter num | '
           f'{"coords":^32} | '
@@ -103,11 +104,12 @@ def gradient_decent(function, one_dim_method=odm.golden_section_method, eps=1e-5
               f'{grad_next[0]:^15.8e}  {grad_next[1]:^15.8e} | ')
         
         coords_prev = coords_next.copy()
-
+    """
     print("\nINFO FOR TABLE1\n")
     print(f'eps   | iter_count | func_counter | {"coords":^30} | func value  ')
     print(f'{eps} | {i:^10} | {func_counter:^12} | {coords_next[0]:.8e}  '
           f'{coords_next[1]:.8e} | {func_value_next:.8e}')
+    """
     
     reset_counter()
     return x_values, y_values
@@ -136,13 +138,14 @@ def broyden_method(function, one_dim_method=odm.golden_section_method, eps=1e-5)
     #coords_prev[0] = input("Enter x0 ")
     #coords_prev[1] = input("Enter y0 ")
 
-    coords_prev[0] = 6
-    coords_prev[1] = 6
+    coords_prev[0] = -4.
+    coords_prev[1] = 2.
 
     x_values = np.array(coords_prev[0])
     y_values = np.array(coords_prev[1])
 
     i = 0
+
     print("TABLE 2 FOR BROYDEN METHOD")
     print(f'{"Hesse":^25} | '
           f'iter num | '
@@ -191,13 +194,15 @@ def broyden_method(function, one_dim_method=odm.golden_section_method, eps=1e-5)
               f'{delta_func:^15.8e} | '
               f'{angle:^15.8e} | '
               f'{grad_next[0]:^15.8e}  {grad_next[1]:^15.8e} | ')
+
         
         coords_prev = coords_next.copy()
-
+    """
     print("\nINFO FOR TABLE1\n")
     print(f'eps   | iter_count | func_counter | {"coords":^30} | func value  ')
     print(f'{eps} | {i:^10} | {func_counter:^12} | {coords_next[0]:.8e}  '
           f'{coords_next[1]:.8e} | {func_value_next:.8e}')
+    """
     
     reset_counter()
     return x_values, y_values
@@ -214,7 +219,7 @@ def plot(function):
 
     plt.contourf(xgrid, ygrid, zgrid, np.linspace(0, 2000, 2000))
     #plt.contourf(xgrid, ygrid, zgrid, np.linspace(-3, 2, 50))
-    
+
     plt.colorbar()
 
     x_values_broyden, y_values_broyden = broyden_method(function)
